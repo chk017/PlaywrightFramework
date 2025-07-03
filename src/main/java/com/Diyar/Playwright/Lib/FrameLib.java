@@ -1,8 +1,8 @@
-package com.CK.Playwright.Lib;
+package com.Diyar.Playwright.Lib;
 
-import com.CK.Playwright.BaseTest.BaseTest;
-import com.CK.Playwright.Reporting.Reporting;
-import com.CK.Playwright.Util.Util;
+import com.Diyar.Playwright.BaseTest.BaseTest;
+import com.Diyar.Playwright.Reporting.Reporting;
+import com.Diyar.Playwright.Util.Util;
 import com.microsoft.playwright.Locator;
 
 public class FrameLib {

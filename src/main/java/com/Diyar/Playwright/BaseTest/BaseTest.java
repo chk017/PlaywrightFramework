@@ -1,4 +1,4 @@
-package com.CK.Playwright.BaseTest;
+package com.Diyar.Playwright.BaseTest;
 
 import java.io.FileReader;
 import java.lang.reflect.Method;
@@ -16,11 +16,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.CK.Playwright.Browser.WebBrowser;
-import com.CK.Playwright.Data.ReadExcel;
-import com.CK.Playwright.Lib.FrameLib;
-import com.CK.Playwright.Reporting.Reporting;
-import com.CK.Playwright.Util.Util;
+import com.Diyar.Playwright.Browser.WebBrowser;
+import com.Diyar.Playwright.Data.ReadExcel;
+import com.Diyar.Playwright.Lib.FrameLib;
+import com.Diyar.Playwright.Reporting.Reporting;
+import com.Diyar.Playwright.Util.Util;
 import com.browserstack.local.Local;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
@@ -30,7 +30,10 @@ import ch.qos.logback.classic.Logger;
 //import atu.testrecorder.exceptions.ATUTestRecorderException;
 //import atu.testrecorder.ATUTestRecorder;
 
-
+/**
+ * BaseTest class
+ * @author ChennakesavaRao Bachu
+ */
 public class BaseTest {
 	protected static Playwright playwright; //= Playwright.create();
 	protected static String sProjectDirectory = System.getProperty("user.dir");
@@ -92,9 +95,6 @@ public class BaseTest {
 			e.printStackTrace();
 
 		}
-		
-		
-		
 	}
 	
 	

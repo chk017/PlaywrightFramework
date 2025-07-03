@@ -1,4 +1,4 @@
-package com.CK.Playwright.Util;
+package com.Diyar.Playwright.Util;
 
 
 
@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,13 +25,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.CK.Playwright.BaseTest.BaseTest;
-import com.CK.Playwright.Reporting.Reporting;
+import com.Diyar.Playwright.BaseTest.BaseTest;
+import com.Diyar.Playwright.Reporting.Reporting;
 
 import de.taimos.totp.TOTP;
 
 public class Util extends BaseTest{
 
+//	public static String formatDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 	public static String formatDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 	public static String formatTime = new SimpleDateFormat("hh.mm.ss").format(new Date());
 	
@@ -217,6 +219,29 @@ public class Util extends BaseTest{
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		return sdf.format(cal.getTime());
 	}
+	
+	
+	 public static String toDate() {
+	        LocalDate today = LocalDate.now();
+//	        LocalDate tomorrow = today.plusDays(1);
+	        System.out.println("Tomorrow's date is: " + today);
+			return today.toString();
+	    }
+	 
+	 
+    public static String tomDate() {
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+        System.out.println("Tomorrow's date is: " + tomorrow);
+		return tomorrow.toString();
+    }
+
+    public static String yesterDate() {
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+        System.out.println("yesterday date is: " + yesterday);
+		return yesterday.toString();
+    }
 	
 	/**
 	 * This method will return the yesterday date and time in the format specified in parameter.
