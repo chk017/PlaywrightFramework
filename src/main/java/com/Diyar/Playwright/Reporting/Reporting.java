@@ -1,4 +1,4 @@
-package com.CK.Playwright.Reporting;
+package com.Diyar.Playwright.Reporting;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,8 +9,8 @@ import java.nio.file.Paths;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 
-import com.CK.Playwright.BaseTest.BaseTest;
-import com.CK.Playwright.Util.Util;
+import com.Diyar.Playwright.BaseTest.BaseTest;
+import com.Diyar.Playwright.Util.Util;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
@@ -27,6 +27,7 @@ public class Reporting extends BaseTest{
 	private static ExtentTest extentTestObj;
 	private static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>() ;
 	
+	
 
 	/**
 	 * This is the start of the test case and this will continue to record the steps until it calls the endtest. 
@@ -42,6 +43,7 @@ public class Reporting extends BaseTest{
 		extentTestObj = extentReportsObj.createTest(testname).assignAuthor("CK_Company");
 		//		Assigning ExtentTest object to the ThreadLocal object of ExtentTest
 		extentTest.set(extentTestObj);
+		
 	}
 
 	/**

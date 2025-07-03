@@ -1,4 +1,4 @@
-package com.CK.Playwright.Data;
+package com.Diyar.Playwright.Data;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-import com.CK.Playwright.BaseTest.BaseTest;
+import com.Diyar.Playwright.BaseTest.BaseTest;
 
 import java.util.Hashtable;
 	

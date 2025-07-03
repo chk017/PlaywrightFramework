@@ -1,10 +1,16 @@
-package com.CK.Playwright.Elements;
+package com.Diyar.Playwright.Elements;
 
-import com.CK.Playwright.BaseTest.BaseTest;
-import com.CK.Playwright.Reporting.Reporting;
+
+import org.testng.Assert;
+
+import com.Diyar.Playwright.BaseTest.BaseTest;
+import com.Diyar.Playwright.Reporting.Reporting;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.WaitForSelectorState;
+
+import io.qameta.allure.Allure;
+import io.qameta.allure.model.Status;
 
 
 public class Elements {
@@ -31,6 +37,7 @@ public class Elements {
 		BaseTest.logger.info("System successfully enters the "+value+" in the field : "+name);
 		verifyInputText(value, name);
 		
+		Assert.assertEquals(value, value);
 	}
 	
 	
@@ -43,6 +50,7 @@ public class Elements {
 		
 	BaseTest.page.locator(sElement).selectOption(value);
 	Reporting.pass("System successfully selected the item : <b>"+value+" </b> in the drop down  <b>"+name+" </b>");
+	Allure.step("System successfully selected the item : "+value+" in the drop down  "+name);
 	BaseTest.logger.info("System successfully selected the item : "+value+" in the drop down "+name);
 	
 	}
@@ -57,6 +65,7 @@ public class Elements {
 //		BaseTest.page.locator(sElement).highlight();
 		BaseTest.page.click(sElement);
 		Reporting.pass("System successfuly clicked the element : <b>"+name+"</b>");
+		Allure.step("System successfuly clicked the element : "+name);
 		BaseTest.logger.info("System successfuly clicked the element : "+name);
 	}
 	
@@ -88,9 +97,11 @@ public class Elements {
 		if(BaseTest.page.locator(sElement).inputValue().contains(value)) {
 			
 			Reporting.pass("Value <b>"+value+"</b> is entered properly in the field <b>"+name);
+			Allure.step("Value "+value+" is entered properly in the field "+name);
 		}else {
 			
 			Reporting.info("seems to be expected value : <b>"+value+"</b> is not entered properly in the field "+name+" , Actual : <b>" + BaseTest.page.locator(sElement).inputValue()+"</b>");
+			Allure.step("seems to be expected value : "+value+" is not entered properly in the field "+name+" , Actual : " + BaseTest.page.locator(sElement).inputValue()+"", Status.FAILED);
 		}
 	}
 	
@@ -157,9 +168,11 @@ public class Elements {
 		/*if(isElementPresent()) {*/
 		if(isElementVisible()) {
 			Reporting.pass("System successfully displays the Element: <b>"+name+"</b>");
+			Allure.step("System successfully displays the Element: "+name);
 			BaseTest.logger.info("System successfully displays the Element: "+name);
 		}else {
 			Reporting.fail("System failed to display the Element: <b>"+name+"</b>", true);
+			Allure.step("System failed to display the Element: "+name, Status.FAILED);
 			BaseTest.logger.info("System failed to display the Element: "+name);
 		}
 	}

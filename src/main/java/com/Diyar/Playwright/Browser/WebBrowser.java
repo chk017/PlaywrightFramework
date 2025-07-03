@@ -1,9 +1,9 @@
-package com.CK.Playwright.Browser;
+package com.Diyar.Playwright.Browser;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.CK.Playwright.BaseTest.BaseTest;
+import com.Diyar.Playwright.BaseTest.BaseTest;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
