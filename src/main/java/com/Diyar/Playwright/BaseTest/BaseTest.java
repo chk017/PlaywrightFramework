@@ -33,6 +33,7 @@ import ch.qos.logback.classic.Logger;
 /**
  * BaseTest class
  * @author ChennakesavaRao Bachu
+ * 08-July-2025
  */
 public class BaseTest {
 	protected static Playwright playwright; //= Playwright.create();
@@ -57,7 +58,6 @@ public class BaseTest {
 	protected static int iPageLoadTimeout = 30;
 	public static Page page;
 	
-//	public static ThreadLocal<Page> pageThreadLocal = new ThreadLocal<Page>();
 	protected HashMap<String, String> LocalBSArgs = new HashMap<String, String>();
 	protected Local localBrowserStack = new Local();
 	public ThreadLocal< Hashtable<String, String>> dataMap;
@@ -288,16 +288,10 @@ public class BaseTest {
 	
 //	private static void chromeSetup(String url) {
 	
-	
-	
-	
 //	private static void edgeSetup(String url) {
-	
 	
 //	private static void firefoxSetup(String url) {
 
-	
-	
 	
 	public Page getPage() {
 		return page;

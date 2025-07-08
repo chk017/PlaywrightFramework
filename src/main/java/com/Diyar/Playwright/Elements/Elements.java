@@ -35,6 +35,7 @@ public class Elements {
 		BaseTest.page.fill(sElement, value);
 //		BaseTest.page.locator(sElement).highlight();
 		BaseTest.logger.info("System successfully enters the "+value+" in the field : "+name);
+//		Allure.step("System successfully enters the "+value+" in the field : "+name);
 		verifyInputText(value, name);
 		
 		Assert.assertEquals(value, value);
