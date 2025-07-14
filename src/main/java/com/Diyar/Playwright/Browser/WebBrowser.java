@@ -10,12 +10,13 @@ import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.CDPSession;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Tracing;
 
 public class WebBrowser extends BaseTest implements Browser{
 
 	private boolean BoolBrowserExtensionRequired = false;
 	private static boolean Headless = false;
-	
+//	private static BrowserContext context;
 	
 	
 	
@@ -61,24 +62,39 @@ public class WebBrowser extends BaseTest implements Browser{
 	
 	public static void chromeSetup() {
 		Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(Headless).setChannel("chrome"));
-		page = browser.newPage();
+		
+		context = browser.newContext();
+		// Start tracing
+		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
+		page = context.newPage();
+
+//		page = browser.newPage();
 		
 		
 	}
 	
 	private static void edgeSetup() {
 		Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(Headless).setChannel("msedge"));
-		page = browser.newPage();
+		context = browser.newContext();
+		// Start tracing
+		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
+		page = context.newPage();
 	}
 	
 	private static void firefoxSetup() {
 		Browser browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(Headless));
-		page = browser.newPage();
+		context = browser.newContext();
+		// Start tracing
+		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
+		page = context.newPage();
 	}
 	
 	private static void webkitSetup() {
 		Browser browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(Headless));
-		page = browser.newPage();
+		context = browser.newContext();
+		// Start tracing
+		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
+		page = context.newPage();
 	}
 	
 	
@@ -144,8 +160,9 @@ public class WebBrowser extends BaseTest implements Browser{
 
 	@Override
 	public byte[] stopTracing() {
-		// TODO Auto-generated method stub
 		return null;
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.Diyar.Playwright.BaseTest;
 
 import java.io.FileReader;
 import java.lang.reflect.Method;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -22,8 +23,10 @@ import com.Diyar.Playwright.Lib.FrameLib;
 import com.Diyar.Playwright.Reporting.Reporting;
 import com.Diyar.Playwright.Util.Util;
 import com.browserstack.local.Local;
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Tracing;
 
 import ch.qos.logback.classic.Logger;
 
@@ -33,6 +36,7 @@ import ch.qos.logback.classic.Logger;
 /**
  * BaseTest class
  * @author ChennakesavaRao Bachu
+ * 14-July-2025
  */
 public class BaseTest {
 	protected static Playwright playwright; //= Playwright.create();
@@ -40,6 +44,7 @@ public class BaseTest {
 	protected static String sTestdataPath = sProjectDirectory + "/Testdata/";
 	protected static String sReportsPath = sProjectDirectory + "/Reports/";
 	protected static String sRecordingsPath = sProjectDirectory + "/Recording/";
+	protected static String sTracingPath = sProjectDirectory + "/Tracing/";
 	
 	protected ReadExcel readexcel = new ReadExcel();
 
@@ -57,7 +62,6 @@ public class BaseTest {
 	protected static int iPageLoadTimeout = 30;
 	public static Page page;
 	
-//	public static ThreadLocal<Page> pageThreadLocal = new ThreadLocal<Page>();
 	protected HashMap<String, String> LocalBSArgs = new HashMap<String, String>();
 	protected Local localBrowserStack = new Local();
 	public ThreadLocal< Hashtable<String, String>> dataMap;
@@ -66,6 +70,7 @@ public class BaseTest {
 	protected WebBrowser browser;
 	public static FrameLib lib;
 //	public static ATUTestRecorder recorder;
+	public static BrowserContext context;
 	
 	public BaseTest() {
 //		playwright = Playwright.create();
@@ -116,6 +121,7 @@ public class BaseTest {
 	@BeforeSuite
 	protected void initialize() {
 		Util.createFolder(sReportsPath);
+		Util.createFolder(sTracingPath);
 		Reporting.startReporting(this.getClass().getSimpleName());
 
 		if(booleanBrowserStack) {
@@ -256,6 +262,10 @@ public class BaseTest {
 		
 		*/
 		System.out.println("after class execution in closing ActiveBrowser :");
+		
+		// Stop tracing and save to file
+		context.tracing().stop(new Tracing.StopOptions().setPath(Paths.get(sTracingPath+"/trace_"+this.getClass().getSimpleName()+".zip")));
+		
 //		getDriver().quit();
 	}
 
@@ -288,16 +298,10 @@ public class BaseTest {
 	
 //	private static void chromeSetup(String url) {
 	
-	
-	
-	
 //	private static void edgeSetup(String url) {
-	
 	
 //	private static void firefoxSetup(String url) {
 
-	
-	
 	
 	public Page getPage() {
 		return page;

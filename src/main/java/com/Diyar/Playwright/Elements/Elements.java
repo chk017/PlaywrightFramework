@@ -1,6 +1,8 @@
 package com.Diyar.Playwright.Elements;
 
 
+import java.io.ByteArrayInputStream;
+
 import org.testng.Assert;
 
 import com.Diyar.Playwright.BaseTest.BaseTest;
@@ -35,6 +37,7 @@ public class Elements {
 		BaseTest.page.fill(sElement, value);
 //		BaseTest.page.locator(sElement).highlight();
 		BaseTest.logger.info("System successfully enters the "+value+" in the field : "+name);
+//		Allure.step("System successfully enters the "+value+" in the field : "+name);
 		verifyInputText(value, name);
 		
 		Assert.assertEquals(value, value);
@@ -82,6 +85,7 @@ public class Elements {
 		}else {
 			Reporting.fail("System failed to match the Expected title : <b>"+sTitle+"</b> whereas Actual title : <b>"+BaseTest.page.title()+"</b>", true);
 			BaseTest.logger.info("System failed to match the Expected title : "+sTitle+" whereas Actual title : "+BaseTest.page.title());
+			Allure.step("Title mismatch ", () -> Allure.attachment(sTitle + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 		}
 		
 	}
@@ -98,10 +102,12 @@ public class Elements {
 			
 			Reporting.pass("Value <b>"+value+"</b> is entered properly in the field <b>"+name);
 			Allure.step("Value "+value+" is entered properly in the field "+name);
+			Allure.step("value matches", () -> Allure.attachment(name + "Screenshot", new ByteArrayInputStream(BaseTest.page.screenshot())));
 		}else {
 			
 			Reporting.info("seems to be expected value : <b>"+value+"</b> is not entered properly in the field "+name+" , Actual : <b>" + BaseTest.page.locator(sElement).inputValue()+"</b>");
 			Allure.step("seems to be expected value : "+value+" is not entered properly in the field "+name+" , Actual : " + BaseTest.page.locator(sElement).inputValue()+"", Status.FAILED);
+			Allure.step("value mismatch", () -> Allure.attachment(name + "Screenshot", new ByteArrayInputStream(BaseTest.page.screenshot())));
 		}
 	}
 	
@@ -125,6 +131,7 @@ public class Elements {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			Allure.step("Element timed out after waiting ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 			e.printStackTrace();
 		}
 		
@@ -170,10 +177,12 @@ public class Elements {
 			Reporting.pass("System successfully displays the Element: <b>"+name+"</b>");
 			Allure.step("System successfully displays the Element: "+name);
 			BaseTest.logger.info("System successfully displays the Element: "+name);
+			Allure.step("Element present in time", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 		}else {
 			Reporting.fail("System failed to display the Element: <b>"+name+"</b>", true);
 			Allure.step("System failed to display the Element: "+name, Status.FAILED);
 			BaseTest.logger.info("System failed to display the Element: "+name);
+			Allure.step("Element not present ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 		}
 	}
 	
@@ -191,6 +200,7 @@ public class Elements {
 			BaseTest.lib.highlight(sElement);
 			return true;
 		} catch (PlaywrightException e) {
+			Allure.step("Element not visible ", () -> Allure.attachment("Element Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 			return false;
 		}
 	}
@@ -209,6 +219,7 @@ public class Elements {
 			BaseTest.lib.highlight(sElement);
 			return true;
 		} catch (PlaywrightException e) {
+			Allure.step("Element not visible ", () -> Allure.attachment("Element Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 			return false;
 		}
 		
