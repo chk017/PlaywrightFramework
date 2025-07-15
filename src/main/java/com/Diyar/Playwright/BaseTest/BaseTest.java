@@ -36,11 +36,7 @@ import ch.qos.logback.classic.Logger;
 /**
  * BaseTest class
  * @author ChennakesavaRao Bachu
-<<<<<<< HEAD
- * 14-July-2025
-=======
- * 08-July-2025
->>>>>>> dcfd118120013ded9a697274720b2f6a26b2e189
+ * 15-July-2025
  */
 public class BaseTest {
 	protected static Playwright playwright; //= Playwright.create();

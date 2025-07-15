@@ -102,7 +102,7 @@ public class Elements {
 			
 			Reporting.pass("Value <b>"+value+"</b> is entered properly in the field <b>"+name);
 			Allure.step("Value "+value+" is entered properly in the field "+name);
-			Allure.step("value matches", () -> Allure.attachment(name + "Screenshot", new ByteArrayInputStream(BaseTest.page.screenshot())));
+//			Allure.step("value matches", () -> Allure.attachment(name + "Screenshot", new ByteArrayInputStream(BaseTest.page.screenshot())));
 		}else {
 			
 			Reporting.info("seems to be expected value : <b>"+value+"</b> is not entered properly in the field "+name+" , Actual : <b>" + BaseTest.page.locator(sElement).inputValue()+"</b>");
@@ -177,7 +177,7 @@ public class Elements {
 			Reporting.pass("System successfully displays the Element: <b>"+name+"</b>");
 			Allure.step("System successfully displays the Element: "+name);
 			BaseTest.logger.info("System successfully displays the Element: "+name);
-			Allure.step("Element present in time", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
+//			Allure.step("Element present in time", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 		}else {
 			Reporting.fail("System failed to display the Element: <b>"+name+"</b>", true);
 			Allure.step("System failed to display the Element: "+name, Status.FAILED);
@@ -228,7 +228,7 @@ public class Elements {
 	
 	/**
 	 * pressKey method is used to type the keys into the focused field.
-	 * F1 - F12, Digit0- Digit9, KeyA- KeyZ, Backquote, Minus, Equal, Backslash, Backspace, Tab, Delete, Escape, ArrowDown, End, Enter, Home, Insert, PageDown, PageUp, ArrowRight, ArrowUp, etc.
+	 * F1 - F12, Digit0- Digit9, KeyA- KeyZ, Back quote, Minus, Equal, Backslash, Backspace, Tab, Delete, Escape, ArrowDown, End, Enter, Home, Insert, PageDown, PageUp, ArrowRight, ArrowUp, etc.
 	 * @param key 
 	 * 
 	 */
