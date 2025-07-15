@@ -5,7 +5,7 @@
 	<groupId>chk017</groupId>
 	<artifactId>PlaywrightFramework</artifactId>
 	<!--<version>0.0.1-SNAPSHOT</version>-->
-	<version>1.0.1</version>
+	<version>1.5.4</version>
 
 
 	<repositories>
