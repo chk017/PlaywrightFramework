@@ -32,7 +32,7 @@ public class Reporting extends BaseTest{
 	/**
 	 * This is the start of the test case and this will continue to record the steps until it calls the endtest. 
 	 * @param testname - This is the name of the testcase
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author -  kaja ChennnakesavaRao Bachu
 	 */
 	public static void startTest(String testname) {
 		/*
@@ -49,7 +49,7 @@ public class Reporting extends BaseTest{
 	/**
 	 * This method is the first step in the reporting. It will create report with name provided as parameter appends with date and time to avoid the override of report
 	 * @param sReportname - This is the name of the report
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author -  kaja ChennnakesavaRao Bachu
 	 */
 	public static void startReporting(String sReportname) {
 		reporterSpark = new ExtentSparkReporter(BaseTest.sReportsPath + sReportname +"_"+Util.getCurrentDatenTime(Util.getformat())+".html");
@@ -68,7 +68,7 @@ public class Reporting extends BaseTest{
 
 	/**
 	 * This method will end the test case that is currently running which was started with method startTest.
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author   kaja ChennnakesavaRao Bachu
 	 */
 	/*
 	 * public static void endTest() { extentReportsObj.endTest(extentTest.get()); }
@@ -76,7 +76,7 @@ public class Reporting extends BaseTest{
 
 	/**
 	 * This method will print the report. this should be run after all the reporting steps are generated.
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author  - kaja ChennnakesavaRao Bachu
 	 */
 	public static void reportflush() {
 		extentReportsObj.flush();
@@ -92,7 +92,7 @@ public class Reporting extends BaseTest{
 	 * This is the statement that generates as Pass in the report that prints the Description 
 	 * @param stepName - enter some text
 	 * @param Screencapture - If this parameter is true, it will provide screenshot of application.
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author   kaja ChennnakesavaRao Bachu
 	 */
 	public static void pass(String sDescription, boolean bScreenCapture) {
 		if(bScreenCapture) {
@@ -107,7 +107,7 @@ public class Reporting extends BaseTest{
 	/**
 	 * This is the statement that generates as Fail in the report that prints the Description 
 	 * @param sDescription - This text will print in the report
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author -  kaja ChennnakesavaRao Bachu
 	 */
 	public static void fail(String sDescription) {
 		extentTest.get().log(Status.FAIL, sDescription);
@@ -118,7 +118,7 @@ public class Reporting extends BaseTest{
 	 * This is the statement that generates as Fail in the report that prints the Description 
 	 * @param Description - This text will print in the report
 	 * @param Screencapture - If this parameter is true, it will provide screenshot of application.
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author -  kaja ChennnakesavaRao Bachu
 	 */
 	public static void fail(String sDescription, boolean bScreenCapture) {
 		if(bScreenCapture) {
@@ -132,7 +132,7 @@ public class Reporting extends BaseTest{
 	/**
 	 * This is the statement that generates Information in the report
 	 * @param sInformation
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author   kaja ChennnakesavaRao Bachu
 	 */
 	public static void info(String sDescription) {
 		extentTest.get().log(Status.INFO, sDescription);
@@ -142,7 +142,7 @@ public class Reporting extends BaseTest{
 	 * This is the statement that generates as Information in the report that prints the Description 
 	 * @param Description - This text will print in the report
 	 * @param Screencapture - If this parameter is true, it will provide screenshot of application.
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author - kaja ChennnakesavaRao Bachu
 	 */
 	public static void info(String sDescription, boolean bScreenCapture) {
 		if(bScreenCapture) {
@@ -156,7 +156,7 @@ public class Reporting extends BaseTest{
 	/**
 	 * This method will capture the screenshot of the page and saves in the Report folder
 	 * @return path of the screenshot with file name as current time
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author - kaja ChennnakesavaRao Bachu
 	 */
 	private static String capture() { 
 		Util.createFolder(sReportsPath + "/Images/");

@@ -224,7 +224,7 @@ public class Util extends BaseTest{
 	 public static String toDate() {
 	        LocalDate today = LocalDate.now();
 //	        LocalDate tomorrow = today.plusDays(1);
-	        System.out.println("Tomorrow's date is: " + today);
+	        System.out.println("Today's date is: " + today);
 			return today.toString();
 	    }
 	 

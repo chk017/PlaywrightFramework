@@ -36,10 +36,10 @@ import ch.qos.logback.classic.Logger;
 /**
  * BaseTest class
  * @author ChennakesavaRao Bachu
- * 15-July-2025
+ * 23-July-2025
  */
 public class BaseTest {
-	protected static Playwright playwright; //= Playwright.create();
+	protected static Playwright playwright;
 	protected static String sProjectDirectory = System.getProperty("user.dir");
 	protected static String sTestdataPath = sProjectDirectory + "/Testdata/";
 	protected static String sReportsPath = sProjectDirectory + "/Reports/";
@@ -48,7 +48,7 @@ public class BaseTest {
 	
 	protected ReadExcel readexcel = new ReadExcel();
 
-	public static Logger logger; // ch.qos.logback.classic.
+	public static Logger logger;
 	protected String sThisMethod;
 	private Properties p = new Properties();
 	private FileReader reader;
@@ -251,22 +251,18 @@ public class BaseTest {
 		
 		/*
 		if (boolVideoRecording) {
-
 			try {
 				recorder.stop();
 			} catch (ATUTestRecorderException e) {
 				// TODO Auto-generated catch block e.printStackTrace();
 			}
-
 		}
-		
 		*/
 		System.out.println("after class execution in closing ActiveBrowser :");
 		
 		// Stop tracing and save to file
 		context.tracing().stop(new Tracing.StopOptions().setPath(Paths.get(sTracingPath+"/trace_"+this.getClass().getSimpleName()+".zip")));
 		
-//		getDriver().quit();
 	}
 
 	/**
@@ -306,7 +302,6 @@ public class BaseTest {
 	public Page getPage() {
 		return page;
 		
-//		return pageThreadLocal.set(page);
 	}
 
 }

@@ -27,8 +27,6 @@ public class FrameLib {
 	
 	public void click(String sElement) {
 		
-		
-		
 		BaseTest.page.locator(sElement).highlight();
 		BaseTest.page.click(sElement);
 		Reporting.pass("System successfuly clicked the element. ");
@@ -37,7 +35,7 @@ public class FrameLib {
 	/**
 	 * This method will maximize the window through Keys
 	 * 
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author - kaja ChennnakesavaRao Bachu
 	 */
 	public void Maximizethewindow() throws AWTException {
 		Robot rb = new Robot();
@@ -54,11 +52,9 @@ public class FrameLib {
 	 * This method will attach the screenshot to the allure report with the names mentioned in parameters 
 	 * @param stepName - name of the step with a triangle icon that can be expanded to see the screenshot
 	 * @param screenshotName - file name with the image
-	 * @author ChennakesavaRao
+	 * @author kaja ChennnakesavaRao Bachu
 	 */
 	public void screenshotToAllure(String stepName, String screenshotName) {
-		
-//		Allure.step("Attach failure screenshot 69", () -> Allure.attachment("Screenshot", new ByteArrayInputStream(page.screenshot())));
 		
 		Allure.step(stepName, () -> Allure.attachment(screenshotName, new ByteArrayInputStream(BaseTest.page.screenshot())));
 	}

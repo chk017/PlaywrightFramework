@@ -15,7 +15,7 @@ import java.util.Hashtable;
 	/**
 	 * This class is used to get the data from Excel, 
 	 * For this we have to create an object for the class ReadExcel and call the method readexceldatawithheadings
-	 * @author (kaja ChennakesavaRao Bachu)
+	 * @author kaja ChennakesavaRao Bachu
 	 */
 
 	public class ReadExcel {

@@ -16,13 +16,12 @@ public class WebBrowser extends BaseTest implements Browser{
 
 	private boolean BoolBrowserExtensionRequired = false;
 	private static boolean Headless = false;
-//	private static BrowserContext context;
 	
 	
 	
 	/**
 	 * Opens the browser provided in the properties file like Chrome, ff, IE. it will pick up the Chrome, if no value provided
-	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 * @author kaja ChennnakesavaRao Bachu
 	 */
 	public void openBrowser() { 
 		System.out.println("Execution in BrowserStack : "+ booleanBrowserStack);
@@ -50,11 +49,9 @@ public class WebBrowser extends BaseTest implements Browser{
 		}else {	
 
 			System.out.println("Choosing the default Browser as : Chrome " );
-//			chromeSetup();
 			WebBrowser.chromeSetup();
 			 
 		}
-//		getDriver().manage().timeouts().pageLoadTimeout(Duration.ofMinutes(iPageLoadTimeout));
 		page.setDefaultTimeout(iTimeout*1000);
 		
 		
@@ -68,7 +65,6 @@ public class WebBrowser extends BaseTest implements Browser{
 		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
 		page = context.newPage();
 
-//		page = browser.newPage();
 		
 		
 	}
@@ -96,8 +92,7 @@ public class WebBrowser extends BaseTest implements Browser{
 		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
 		page = context.newPage();
 	}
-	
-	
+
 	@Override
 	public void onDisconnected(Consumer<Browser> handler) {
 		// TODO Auto-generated method stub
@@ -160,9 +155,8 @@ public class WebBrowser extends BaseTest implements Browser{
 
 	@Override
 	public byte[] stopTracing() {
-		return null;
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
