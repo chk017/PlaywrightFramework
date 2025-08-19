@@ -18,11 +18,25 @@ public class WebBrowser extends BaseTest implements Browser{
 	private static boolean Headless = false;
 	
 	
-	
 	/**
-	 * Opens the browser provided in the properties file like Chrome, ff, IE. it will pick up the Chrome, if no value provided
-	 * @author kaja ChennnakesavaRao Bachu
-	 */
+	 * openBrowser is a utility that launches a browser using Playwright
+	 * based on the configuration provided in `config.properties`. Supported browsers include:
+	 * <ul>
+	 *     <li>Chrome (default)</li>
+	 *     <li>Firefox</li>
+	 *     <li>WebKit (used as a placeholder for IE, since IE is not supported by Playwright)</li>
+	 * </ul>
+	 *
+	 * <p>If no browser is specified, Chrome is used by default.</p>
+	 *
+	 * <p>Features:
+	 * <ul>
+	 *     <li>Reads browser type and execution mode from a properties file</li>
+	 *     <li>Launches the specified browser in headless or headed mode</li>
+	 *     <li>Starts and stops tracing, saving output to trace.zip</li>
+	 * </ul>
+*/
+	
 	public void openBrowser() { 
 		System.out.println("Execution in BrowserStack : "+ booleanBrowserStack);
 		playwright = Playwright.create();
@@ -37,8 +51,8 @@ public class WebBrowser extends BaseTest implements Browser{
 		}else { System.out.println("Choosen Browser : " + sBrowser); }
 
 		if(sBrowser.equalsIgnoreCase("Chrome") || sBrowser.equalsIgnoreCase("")) {
-			WebBrowser.chromeSetup();
 //			chromeSetup();
+			WebBrowser.chromeSetup();
 		}else if(sBrowser.equalsIgnoreCase("FF") || sBrowser.equalsIgnoreCase("firefox")){
 			firefoxSetup();
 		}else if(sBrowser.equalsIgnoreCase("EDGE")) {
@@ -57,6 +71,13 @@ public class WebBrowser extends BaseTest implements Browser{
 		
 	}
 	
+	/**
+	 * chromeSetup is a utility that launches the Chrome browser using Playwright
+	 * in either headless or headed mode based on the configuration provided in `config.properties`.
+	 * It also starts tracing to capture screenshots, snapshots, and source code for debugging purposes.
+	 * 
+	 * @author kaja ChennnakesavaRao Bachu
+	 */
 	public static void chromeSetup() {
 		Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(Headless).setChannel("chrome"));
 		
@@ -69,6 +90,13 @@ public class WebBrowser extends BaseTest implements Browser{
 		
 	}
 	
+	/**
+	 * edgeSetup is a utility that launches the Chrome browser using Playwright
+	 * in either headless or headed mode based on the configuration provided in `config.properties`.
+	 * It also starts tracing to capture screenshots, snapshots, and source code for debugging purposes.
+	 * 
+	 * @author kaja ChennnakesavaRao Bachu
+	 */
 	private static void edgeSetup() {
 		Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(Headless).setChannel("msedge"));
 		context = browser.newContext();
@@ -77,6 +105,13 @@ public class WebBrowser extends BaseTest implements Browser{
 		page = context.newPage();
 	}
 	
+	/**
+	 * firefoxSetup is a utility that launches the Chrome browser using Playwright
+	 * in either headless or headed mode based on the configuration provided in `config.properties`.
+	 * It also starts tracing to capture screenshots, snapshots, and source code for debugging purposes.
+	 * 
+	 * @author kaja ChennnakesavaRao Bachu
+	 */
 	private static void firefoxSetup() {
 		Browser browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(Headless));
 		context = browser.newContext();
@@ -85,6 +120,13 @@ public class WebBrowser extends BaseTest implements Browser{
 		page = context.newPage();
 	}
 	
+	/**
+	 * WebKitLauncher is a utility class that launches the WebKit browser using Playwright
+	 * in either headless or headed mode based on the configuration provided in `config.properties`.
+	 * It also starts tracing to capture screenshots, snapshots, and source code for debugging purposes.
+	 *
+	 *	@author kaja ChennnakesavaRao Bachu
+	 */
 	private static void webkitSetup() {
 		Browser browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(Headless));
 		context = browser.newContext();

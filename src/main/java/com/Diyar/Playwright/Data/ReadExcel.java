@@ -13,11 +13,12 @@ import com.Diyar.Playwright.BaseTest.BaseTest;
 import java.util.Hashtable;
 	
 	/**
-	 * This class is used to get the data from Excel, 
-	 * For this we have to create an object for the class ReadExcel and call the method readexceldatawithheadings
-	 * @author kaja ChennakesavaRao Bachu
-	 */
-
+	* ReadExcel is a utility class used to read data from an Excel file.
+	* It provides functionality to extract data along with column headings,
+	* making it suitable for data-driven testing or configuration loading.
+	* 
+	* @author kaja ChennakesavaRao Bachu
+	*/
 	public class ReadExcel {
 
 		int colnum; 
@@ -27,17 +28,29 @@ import java.util.Hashtable;
 
 		
 		/**
-		 *  This method gets the data by passing the column name, row name, which means we get the value where the column and row intersect 
-		 *  a new folder "testFiles" should be created in ckFramework and excel sheet with test data should be placed in testFiles folder. 
-		 *  sTestdata_Path = sproject_path + //testFiles//test_data.xlsx 
-		 *  Here test_data.xlsx is the sheet you created in testFiles folder. where as sproject_path will consider the current project path.
+		 *  This method retrieves a cell value from an Excel sheet by intersecting the specified
+		 * column name and row name. It is designed for use in data-driven testing scenarios.
+		 * 
+		 * 
+		 * <p>Setup Instructions:
+		 * <ul>
+		 *     <li>Create a folder named <b>Testdata</b> inside your project directory.</li>
+		 *     <li>Place the Excel file named <b>test_data.xlsx</b> inside the Testdata folder.</li>
+		 * </ul>
+		 *
+		 * 	<p>Excel Format Assumption:
+		 * <ul>
+		 *     <li>First row contains column headings.</li>
+		 *     <li>First column contains row identifiers.</li>
+		 * </ul>
+		 * 
 		 *  
 		 * @param path - Path of excel Workbook from which data to retrieve
 		 * @param sSheetName - Name of the sheet
 		 * @param sRowHeading - Heading of the row to get the data from that row
 		 * @param columnHeading - Heading of the column to get the data from that column
-		 * @return returns the value from excel based on the parameters provided as Row and Column
-		 * @author (kaja ChennakesavaRao Bachu)
+		 * @return The cell value at the intersection of the specified row and column, or null if not found.
+		 * @author kaja ChennakesavaRao Bachu
 		 */
 		public String getdata (String sPath, String sSheetName, String sRowHeading, String sColumnHeading){
 

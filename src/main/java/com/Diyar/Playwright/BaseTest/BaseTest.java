@@ -36,7 +36,7 @@ import ch.qos.logback.classic.Logger;
 /**
  * BaseTest class
  * @author ChennakesavaRao Bachu
- * 23-July-2025
+ * 19-Aug-2025
  */
 public class BaseTest {
 	protected static Playwright playwright;
@@ -46,11 +46,10 @@ public class BaseTest {
 	protected static String sRecordingsPath = sProjectDirectory + "/Recording/";
 	protected static String sTracingPath = sProjectDirectory + "/Tracing/";
 	
-	protected ReadExcel readexcel = new ReadExcel();
-
-	public static Logger logger;
-	protected String sThisMethod;
 	private Properties p = new Properties();
+	protected ReadExcel readexcel = new ReadExcel();
+	protected String sThisMethod;
+	public static Logger logger;
 	private FileReader reader;
 	private String sTestdataFile;
 	public static String sURL;
@@ -58,9 +57,10 @@ public class BaseTest {
 	protected boolean boolVideoRecording = false;
 	protected static String sBrowserStackUsername ;
 	protected static String sBrowserStackAccesskey ;
+	
+	public static Page page;
 	public static int iTimeout = 30;
 	protected static int iPageLoadTimeout = 30;
-	public static Page page;
 	
 	protected HashMap<String, String> LocalBSArgs = new HashMap<String, String>();
 	protected Local localBrowserStack = new Local();
@@ -69,8 +69,8 @@ public class BaseTest {
 	public String sBrowser;
 	protected WebBrowser browser;
 	public static FrameLib lib;
-//	public static ATUTestRecorder recorder;
 	public static BrowserContext context;
+//	public static ATUTestRecorder recorder;
 	
 	public BaseTest() {
 //		playwright = Playwright.create();
@@ -136,8 +136,6 @@ public class BaseTest {
 		}
 	/*	
 		if(boolVideoRecording) {
-			
-			
 			  try { Util.createFolder(sRecordingsPath); 
 			  recorder = new ATUTestRecorder(sRecordingsPath, this.getClass().getSimpleName() +
 			  Util.getCurrentDatenTime(Util.getformat()), false); } catch
@@ -146,6 +144,7 @@ public class BaseTest {
 			 		
 		}
 */
+		
 	}
 
 
@@ -210,6 +209,7 @@ public class BaseTest {
 
 		System.out.println("Test data Keys and Values for script : " + sThisMethod + " : \n " + dataMap.get().entrySet());
 
+		
 //		Capabilities cap = ((RemoteWebDriver) getDriver()).getCapabilities();
 //		Reporting.info(sThisMethod+" is running on Browser : " + cap.getBrowserName().toLowerCase());
 
@@ -240,7 +240,7 @@ public class BaseTest {
 		if(result.getStatus() == ITestResult.FAILURE) {
 			Reporting.fail("Test Failed  : "+ result.getThrowable(), true);
 //			Reporting.fail("Test status : "+result.getStatus(), true);
-//			Reporting.fail("Test : "+result.getName()+" is Failed  with the instance : " + result.getInstanceName());
+			
 		}
 		logger.info("\n \n xxxxxxxxxxxxxxxx   -   End of Test  -  xxxxxxxxxxxxxxxx \n ");
 		
@@ -258,6 +258,7 @@ public class BaseTest {
 			}
 		}
 		*/
+		
 		System.out.println("after class execution in closing ActiveBrowser :");
 		
 		// Stop tracing and save to file
@@ -305,3 +306,8 @@ public class BaseTest {
 	}
 
 }
+
+
+
+
+
