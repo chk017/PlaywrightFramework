@@ -9,7 +9,7 @@
 - [Writing page Objects](#how-to-write-page-objects)
 
 
-[Maintaining Testdata](#how-to-maintain-testdata)
+[Testdata Maintenance](#maintaining-testdata)
 
 - [Sample test data in Excel](#sample-test-data-creation-in-excel-sheet)
 
@@ -588,15 +588,15 @@ Create a class in the Package and extends to basetest. See the sample below:
 
 
  ### **Writing Methods :**
- -  Method name should start with a small letter
+ -  Method name should start with small letter
  -  Method name should have numbering like TS01
  -  Method should have **@Test** annotation from TestNG.
  -  Preferred Method format -   \<ModuleName\>_TS01_\<Functionality_Name\>
  -  Sample Method name -   dsp_TS01_Login_with_Valid_Credentials
 
 -   *Reporting.pass("pass Description")*    -    This line will print success line in the report.
--   *Reporting.fail("FailDescription")*     -   This line will print the failure line in the report
--   *Reporting.fail("FailDescription", __true__)*     -   This line will print the failure line in the report along with the screenshot of the application.
+-   *Reporting.fail("FailDescription")*     -   This line will print failure line in the report
+-   *Reporting.fail("FailDescription", __true__)*     -   This line will print failure line in the report along with screenshot of the application.
 
 
 ### How to run as TestNG
