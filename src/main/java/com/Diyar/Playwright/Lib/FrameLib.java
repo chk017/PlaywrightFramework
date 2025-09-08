@@ -14,6 +14,14 @@ import io.qameta.allure.Allure;
 public class FrameLib {
 
 	
+
+	public void click(String sElement) {
+		
+		BaseTest.page.locator(sElement).highlight();
+		BaseTest.page.click(sElement);
+		Reporting.pass("System successfuly clicked the element. ");
+	}
+	
 	public void highlight(String sElement) {
 		
 		// Locate the element you want to highlight
@@ -23,14 +31,18 @@ public class FrameLib {
         elementToHighlight.evaluate("(element) => {element.style.backgroundColor = ''; element.style.border = ''; }");
 	}
 	
-	
-	
-	public void click(String sElement) {
+
+	/**
+	 * This method will attach the screenshot to the allure report with the names mentioned in parameters 
+	 * @param stepName - name of the step with a triangle icon that can be expanded to see the screenshot
+	 * @param screenshotName - file name with the image
+	 * @author kaja ChennnakesavaRao Bachu
+	 */
+	public void screenshotToAllure(String stepName, String screenshotName) {
 		
-		BaseTest.page.locator(sElement).highlight();
-		BaseTest.page.click(sElement);
-		Reporting.pass("System successfuly clicked the element. ");
+		Allure.step(stepName, () -> Allure.attachment(screenshotName, new ByteArrayInputStream(BaseTest.page.screenshot())));
 	}
+	
 	
 	/**
 	 * This method will maximize the window through Keys
@@ -48,14 +60,4 @@ public class FrameLib {
 		rb.keyRelease(java.awt.event.KeyEvent.VK_ALT);
 	}
 	
-	/**
-	 * This method will attach the screenshot to the allure report with the names mentioned in parameters 
-	 * @param stepName - name of the step with a triangle icon that can be expanded to see the screenshot
-	 * @param screenshotName - file name with the image
-	 * @author kaja ChennnakesavaRao Bachu
-	 */
-	public void screenshotToAllure(String stepName, String screenshotName) {
-		
-		Allure.step(stepName, () -> Allure.attachment(screenshotName, new ByteArrayInputStream(BaseTest.page.screenshot())));
-	}
 }

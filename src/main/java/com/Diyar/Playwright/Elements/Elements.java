@@ -25,11 +25,43 @@ public class Elements {
 	public Elements(String sXpath) {
 		this.sElement = sXpath;
 	}
+	
+	private void waitforElement(String name) {
+//		System.out.println("waiting for element "+name);
+		try {
+			BaseTest.logger.info("waiting for element : "+name);
+			BaseTest.page.waitForSelector(sElement);
+			BaseTest.lib.highlight(sElement);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Allure.step("Element timed out after waiting ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * click method is used to click on element. Before clicking, system wait for element, highlights the element and clicks on it
+	 * @param name - name of the field
+	 * @author - ChennakesavaRao Bachu  
+	 */
+	public void click(String name) {
+		waitforElement(name);
+//		BaseTest.page.locator(sElement).highlight();
+		BaseTest.page.click(sElement);
+		Reporting.pass("System successfuly clicked the element : <b>"+name+"</b>");
+		Allure.step("System successfuly clicked the element : "+name);
+		BaseTest.logger.info("System successfuly clicked the element : "+name);
+	}
+
+	
 	/**
 	 * fill method is used to enter a value in the field. Before filling, system wait for the element, highlights the element, fills the value in the field and finally verifies the value. 
 	 * @param value - value to enter in the field
 	 * @param name - name of the field 
-	 * @author ChennakesavaRao Bachu 
+	 * 
+	 * @author - kaja ChennnakesavaRao Bachu
 	 */
 	public void fill(String value, String name) {
 //		BaseTest.page.waitForSelector(sElement);
@@ -41,6 +73,27 @@ public class Elements {
 		verifyInputText(value, name);
 		
 		Assert.assertEquals(value, value);
+	}
+	
+	
+	/**
+	 * verifyElementPresent is a method to verify the visibility of element and prints in the reporting
+	 * @param name - It is just name of the element 
+	 * @author - ChennakesavaRao Bachu
+	 */
+	public void verifyElementPresent(String name) {
+		/*if(isElementPresent()) {*/
+		if(isElementVisible()) {
+			Reporting.pass("System successfully displays the Element: <b>"+name+"</b>");
+			Allure.step("System successfully displays the Element: "+name);
+			BaseTest.logger.info("System successfully displays the Element: "+name);
+//			Allure.step("Element present in time", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
+		}else {
+			Reporting.fail("System failed to display the Element: <b>"+name+"</b>", true);
+			Allure.step("System failed to display the Element: "+name, Status.FAILED);
+			BaseTest.logger.info("System failed to display the Element: "+name);
+			Allure.step("Element not present ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
+		}
 	}
 	
 	
@@ -58,19 +111,6 @@ public class Elements {
 	
 	}
 	
-	/**
-	 * click method is used to click on element. Before clicking, system wait for element, highlights the element and clicks on it
-	 * @param name - name of the field
-	 * @author - ChennakesavaRao Bachu  
-	 */
-	public void click(String name) {
-		waitforElement(name);
-//		BaseTest.page.locator(sElement).highlight();
-		BaseTest.page.click(sElement);
-		Reporting.pass("System successfuly clicked the element : <b>"+name+"</b>");
-		Allure.step("System successfuly clicked the element : "+name);
-		BaseTest.logger.info("System successfuly clicked the element : "+name);
-	}
 	
 	/**
 	 * This method verifies the tile of the current web page is matching with title provided as parameter and prints in the report 
@@ -122,20 +162,7 @@ public class Elements {
 	}
 	
 	
-	private void waitforElement(String name) {
-//		System.out.println("waiting for element "+name);
-		try {
-			BaseTest.logger.info("waiting for element : "+name);
-			BaseTest.page.waitForSelector(sElement);
-			BaseTest.lib.highlight(sElement);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			Allure.step("Element timed out after waiting ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
-			e.printStackTrace();
-		}
-		
-	}
+	
 
 	/*
 	 * private void waitforLocator(String name) { //
@@ -166,32 +193,14 @@ public class Elements {
 		return tOrf;
 	}
 	
-	/**
-	 * verifyElementPresent is a method to verify the visibility of element and prints in the reporting
-	 * @param name - It is just name of the element 
-	 * @author - ChennakesavaRao Bachu
-	 */
-	public void verifyElementPresent(String name) {
-		/*if(isElementPresent()) {*/
-		if(isElementVisible()) {
-			Reporting.pass("System successfully displays the Element: <b>"+name+"</b>");
-			Allure.step("System successfully displays the Element: "+name);
-			BaseTest.logger.info("System successfully displays the Element: "+name);
-//			Allure.step("Element present in time", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
-		}else {
-			Reporting.fail("System failed to display the Element: <b>"+name+"</b>", true);
-			Allure.step("System failed to display the Element: "+name, Status.FAILED);
-			BaseTest.logger.info("System failed to display the Element: "+name);
-			Allure.step("Element not present ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
-		}
-	}
+	
 	
 
 	/**
 	 * isElementVisible method is used to wait for visibility of element for number of seconds mentioned in parameter and returns true on presence or wait to return False for absence
 	 * @param sec - number of seconds to wait before return false
 	 * @return boolean
-	 * @author ChennakesavaRao Bachu
+	 * @author - kaja ChennnakesavaRao Bachu
 	 */
 	public boolean isElementVisible(int iTimeout) {
 		try {
@@ -210,7 +219,7 @@ public class Elements {
 	 * isElementVisible method is used to wait for visibility of element 
 	 * @param sec - number of seconds to wait to return false
 	 * @return boolean
-	 * @author ChennakesavaRao Bachu
+	 * @author - kaja ChennnakesavaRao Bachu
 	 */
 	public boolean isElementVisible() {
 		try {

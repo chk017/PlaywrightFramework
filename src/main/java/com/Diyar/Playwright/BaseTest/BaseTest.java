@@ -1,34 +1,32 @@
 package com.Diyar.Playwright.BaseTest;
 
-import java.io.FileReader;
+import com.Diyar.Playwright.Reporting.Reporting;
+import com.Diyar.Playwright.Browser.WebBrowser;
+import com.microsoft.playwright.BrowserContext;
+import com.Diyar.Playwright.Data.ReadExcel;
+import com.microsoft.playwright.Playwright;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+import com.Diyar.Playwright.Lib.FrameLib;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import com.microsoft.playwright.Tracing;
+import com.Diyar.Playwright.Util.Util;
+import ch.qos.logback.classic.Logger;
+import com.microsoft.playwright.Page;
+import com.browserstack.local.Local;
 import java.lang.reflect.Method;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Properties;
-
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import java.util.Properties;
+import java.nio.file.Paths;
+import java.util.Hashtable;
+import java.io.FileReader;
+import java.util.HashMap;
 
-import com.Diyar.Playwright.Browser.WebBrowser;
-import com.Diyar.Playwright.Data.ReadExcel;
-import com.Diyar.Playwright.Lib.FrameLib;
-import com.Diyar.Playwright.Reporting.Reporting;
-import com.Diyar.Playwright.Util.Util;
-import com.browserstack.local.Local;
-import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Tracing;
-
-import ch.qos.logback.classic.Logger;
 
 //import atu.testrecorder.exceptions.ATUTestRecorderException;
 //import atu.testrecorder.ATUTestRecorder;
@@ -36,10 +34,9 @@ import ch.qos.logback.classic.Logger;
 /**
  * BaseTest class
  * @author ChennakesavaRao Bachu
- * 19-Aug-2025
+ * 08-Sep-2025
  */
 public class BaseTest {
-	protected static Playwright playwright;
 	protected static String sProjectDirectory = System.getProperty("user.dir");
 	protected static String sTestdataPath = sProjectDirectory + "/Testdata/";
 	protected static String sReportsPath = sProjectDirectory + "/Reports/";
@@ -48,15 +45,16 @@ public class BaseTest {
 	
 	private Properties p = new Properties();
 	protected ReadExcel readexcel = new ReadExcel();
+	protected boolean booleanBrowserStack;
+	protected static String sBrowserStackUsername ;
+	protected boolean boolVideoRecording = false;
+	protected static String sBrowserStackAccesskey ;
+	protected static Playwright playwright;
+	private String sTestdataFile;
 	protected String sThisMethod;
 	public static Logger logger;
 	private FileReader reader;
-	private String sTestdataFile;
 	public static String sURL;
-	protected boolean booleanBrowserStack;
-	protected boolean boolVideoRecording = false;
-	protected static String sBrowserStackUsername ;
-	protected static String sBrowserStackAccesskey ;
 	
 	public static Page page;
 	public static int iTimeout = 30;

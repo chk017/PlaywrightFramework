@@ -66,16 +66,12 @@ public class Reporting extends BaseTest{
 //		Logger.getLogger(sReportname);
 	}
 
-	/**
-	 * This method will end the test case that is currently running which was started with method startTest.
-	 * @author   kaja ChennnakesavaRao Bachu
-	 */
-	/*
-	 * public static void endTest() { extentReportsObj.endTest(extentTest.get()); }
-	 */
+	
 
 	/**
-	 * This method will print the report. this should be run after all the reporting steps are generated.
+	 * 
+	 * Finalizes and prints the test report.
+	 * This method should be called only after all reporting steps have been completed.
 	 * @author  - kaja ChennnakesavaRao Bachu
 	 */
 	public static void reportflush() {
@@ -89,7 +85,7 @@ public class Reporting extends BaseTest{
 
 	
 	/**
-	 * This is the statement that generates as Pass in the report that prints the Description 
+	 * Marks the test step as passed and includes the success description in the report. 
 	 * @param stepName - enter some text
 	 * @param Screencapture - If this parameter is true, it will provide screenshot of application.
 	 * @author   kaja ChennnakesavaRao Bachu
@@ -105,7 +101,7 @@ public class Reporting extends BaseTest{
 
 
 	/**
-	 * This is the statement that generates as Fail in the report that prints the Description 
+	 * Logs a failure status in the test report along with the provided description. 
 	 * @param sDescription - This text will print in the report
 	 * @author -  kaja ChennnakesavaRao Bachu
 	 */
@@ -130,7 +126,7 @@ public class Reporting extends BaseTest{
 
 
 	/**
-	 * This is the statement that generates Information in the report
+	 * Generates informational content to be included in the test report.
 	 * @param sInformation
 	 * @author   kaja ChennnakesavaRao Bachu
 	 */
@@ -154,7 +150,7 @@ public class Reporting extends BaseTest{
 
 
 	/**
-	 * This method will capture the screenshot of the page and saves in the Report folder
+	 * Capture a screenshot of the current page and Save the screenshot in the 'Report' directory with the specified filename
 	 * @return path of the screenshot with file name as current time
 	 * @author - kaja ChennnakesavaRao Bachu
 	 */
@@ -204,22 +200,11 @@ public class Reporting extends BaseTest{
 	}
 
 
-	/**
-	 * This method is used to convert the image to base64 string and format the base64 string with png.
-	 * @param capturePath - Image path
-	 * @return - Returns the formatted base64String like "data:image/png;base64," + <base64String>
-	 */
-	private static String formatBase64Binary(String sCapturePath) {
-
-		String base64str = encodeFileToBase64(new File(sCapturePath));
-		String imgFormat = "data:image/png;base64," + base64str;
-		return imgFormat;
-
-	}
 
 
 	/**
-	 * This method converts an image to base64 String.
+	 * Encodes the contents of a file into a Base64 string.
+	 * Useful for embedding binary data (like images or documents) into text-based formats.
 	 * 
 	 * @param file
 	 * @return - Base64String
@@ -241,8 +226,29 @@ public class Reporting extends BaseTest{
 		return encodedfile;
 	}
 
-	
 
+	/**
+	 * Converts the input image to a Base64-encoded string and formats it with the PNG data URI prefix.
+
+	 * @param capturePath - Image path
+	 * @return - Returns the formatted base64String like "data:image/png;base64," + <base64String>
+	 */
+	private static String formatBase64Binary(String sCapturePath) {
+
+		String base64str = encodeFileToBase64(new File(sCapturePath));
+		String imgFormat = "data:image/png;base64," + base64str;
+		return imgFormat;
+
+	}
+	
+	
+	/**
+	 * This method will end the test case that is currently running which was started with method startTest.
+	 * @author   kaja ChennnakesavaRao Bachu
+	 */
+	/*
+	 * public static void endTest() { extentReportsObj.endTest(extentTest.get()); }
+	 */
 	
 	
 }
