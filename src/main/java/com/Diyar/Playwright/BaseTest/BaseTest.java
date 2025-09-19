@@ -2,6 +2,7 @@ package com.Diyar.Playwright.BaseTest;
 
 import com.Diyar.Playwright.Reporting.Reporting;
 import com.Diyar.Playwright.Browser.WebBrowser;
+import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.BrowserContext;
 import com.Diyar.Playwright.Data.ReadExcel;
 import com.microsoft.playwright.Playwright;
@@ -34,13 +35,12 @@ import java.util.HashMap;
 /**
  * BaseTest class
  * @author ChennakesavaRao Bachu
- * 08-Sep-2025
+ * 19-Sep-2025
  */
 public class BaseTest {
 	protected static String sProjectDirectory = System.getProperty("user.dir");
 	protected static String sTestdataPath = sProjectDirectory + "/Testdata/";
 	protected static String sReportsPath = sProjectDirectory + "/Reports/";
-	protected static String sRecordingsPath = sProjectDirectory + "/Recording/";
 	protected static String sTracingPath = sProjectDirectory + "/Tracing/";
 	
 	private Properties p = new Properties();
@@ -61,14 +61,16 @@ public class BaseTest {
 	protected static int iPageLoadTimeout = 30;
 	
 	protected HashMap<String, String> LocalBSArgs = new HashMap<String, String>();
-	protected Local localBrowserStack = new Local();
+	public static String sRecordingsPath = sProjectDirectory + "/Recording/";
 	public ThreadLocal< Hashtable<String, String>> dataMap;
+	protected Local localBrowserStack = new Local();
 	
 	public String sBrowser;
 	protected WebBrowser browser;
 	public static FrameLib lib;
 	public static BrowserContext context;
 //	public static ATUTestRecorder recorder;
+	public static APIRequestContext apiRequestContext;
 	
 	public BaseTest() {
 //		playwright = Playwright.create();
@@ -120,6 +122,7 @@ public class BaseTest {
 	protected void initialize() {
 		Util.createFolder(sReportsPath);
 		Util.createFolder(sTracingPath);
+		Util.createFolder(sRecordingsPath);
 		Reporting.startReporting(this.getClass().getSimpleName());
 
 		if(booleanBrowserStack) {

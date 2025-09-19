@@ -1,9 +1,13 @@
 package com.Diyar.Playwright.Browser;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import com.Diyar.Playwright.BaseTest.BaseTest;
+import com.Diyar.Playwright.BrowserOptions.BrowserOptions;
+import com.microsoft.playwright.APIRequest;
+import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
@@ -16,6 +20,7 @@ public class WebBrowser extends BaseTest implements Browser{
 
 	private boolean BoolBrowserExtensionRequired = false;
 	private static boolean Headless = false;
+	private static boolean API = false;
 	
 	
 	/**
@@ -39,16 +44,26 @@ public class WebBrowser extends BaseTest implements Browser{
 	
 	public void openBrowser() { 
 		System.out.println("Execution in BrowserStack : "+ booleanBrowserStack);
-		playwright = Playwright.create();
-		
-		BoolBrowserExtensionRequired = Boolean.parseBoolean(getproperty("BrowserExtensionRequired"));
-		System.out.println(" BoolBrowserExtensionRequired : " + BoolBrowserExtensionRequired);
-		Headless = Boolean.parseBoolean(getproperty("Headless"));
 		
 
-		if(sBrowser == null) {
+		
+//		Load configuration flags
+		BoolBrowserExtensionRequired = Boolean.parseBoolean(getproperty("BrowserExtensionRequired"));
+		Headless = Boolean.parseBoolean(getproperty("Headless"));
+		API = Boolean.parseBoolean(getproperty("API"));
+		
+		System.out.println(" BoolBrowserExtensionRequired : " + BoolBrowserExtensionRequired);
+	
+		if(API) {
+			setupApiEnvironment();
+		}
+		
+
+		if(sBrowser == null || sBrowser.trim().isEmpty()) {
 			sBrowser = getproperty("browser");
-		}else { System.out.println("Choosen Browser : " + sBrowser); }
+		}else { 
+			
+			System.out.println("Choosen Browser : " + sBrowser); }
 
 		if(sBrowser.equalsIgnoreCase("Chrome") || sBrowser.equalsIgnoreCase("")) {
 //			chromeSetup();
@@ -66,10 +81,54 @@ public class WebBrowser extends BaseTest implements Browser{
 			WebBrowser.chromeSetup();
 			 
 		}
+		
+		
 		page.setDefaultTimeout(iTimeout*1000);
 		
 		
 	}
+	
+	
+	
+	private void setupApiEnvironment() {
+	    System.out.println("API mode enabled. Setting up API environment...");
+
+//		Initialize playwright
+		playwright = Playwright.create();
+		APIRequest apiRequest = playwright.request();
+//		APIRequestContext apiRequestContext = apiRequest.newContext();
+		
+		
+		
+	    String baseUrl = getproperty("api.baseUrl");
+	    String token = getproperty("api.token"); // Or get from secrets manager
+
+	    if (baseUrl == null || baseUrl.isEmpty()) {
+	        throw new IllegalArgumentException("API base URL is not configured.");
+	    }
+
+	    // Example: Create API context using Playwright (if you're using Playwright API testing)
+	    APIRequest.NewContextOptions options = new APIRequest.NewContextOptions()
+	            .setBaseURL(baseUrl)
+	            .setExtraHTTPHeaders(Map.of(
+	                    "Authorization", "Bearer " + token,
+	                    "Content-Type", "application/json"
+	            ));
+
+	     apiRequestContext = apiRequest.newContext(options);
+	    System.out.println("API request context created with base URL: " + baseUrl);
+	}
+
+	
+	/*
+	 * APIResponse response = apiRequestContext.get("/users/123");
+	 * System.out.println("Status: " + response.status());
+	 * System.out.println("Body: " + response.text());
+	 * 
+	 */	
+	
+	
+		
 	
 	/**
 	 * chromeSetup is a utility that launches the Chrome browser using Playwright
@@ -81,7 +140,18 @@ public class WebBrowser extends BaseTest implements Browser{
 	public static void chromeSetup() {
 		Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(Headless).setChannel("chrome"));
 		
-		context = browser.newContext();
+		
+		// Add ignoreHTTPSErrors here
+	/*	Browser.NewContextOptions contextOptions = new Browser.NewContextOptions()
+		    .setIgnoreHTTPSErrors(true);
+		*/
+		
+		NewContextOptions a = BrowserOptions.options();
+		
+		System.out.println("a : "+ a);
+//		context = browser.newContext();
+		context = browser.newContext(a);
+		
 		// Start tracing
 		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
 		page = context.newPage();
