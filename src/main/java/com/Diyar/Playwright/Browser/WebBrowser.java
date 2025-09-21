@@ -44,8 +44,7 @@ public class WebBrowser extends BaseTest implements Browser{
 	
 	public void openBrowser() { 
 		System.out.println("Execution in BrowserStack : "+ booleanBrowserStack);
-		
-
+		playwright = Playwright.create();
 		
 //		Load configuration flags
 		BoolBrowserExtensionRequired = Boolean.parseBoolean(getproperty("BrowserExtensionRequired"));
@@ -94,7 +93,7 @@ public class WebBrowser extends BaseTest implements Browser{
 	    System.out.println("API mode enabled. Setting up API environment...");
 
 //		Initialize playwright
-		playwright = Playwright.create();
+//		playwright = Playwright.create();
 		APIRequest apiRequest = playwright.request();
 //		APIRequestContext apiRequestContext = apiRequest.newContext();
 		
@@ -146,11 +145,11 @@ public class WebBrowser extends BaseTest implements Browser{
 		    .setIgnoreHTTPSErrors(true);
 		*/
 		
-		NewContextOptions a = BrowserOptions.options();
+		NewContextOptions newContextOptions = BrowserOptions.options();
 		
-		System.out.println("a : "+ a);
+//		System.out.println("a : "+ a);
 //		context = browser.newContext();
-		context = browser.newContext(a);
+		context = browser.newContext(newContextOptions);
 		
 		// Start tracing
 		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
@@ -169,7 +168,15 @@ public class WebBrowser extends BaseTest implements Browser{
 	 */
 	private static void edgeSetup() {
 		Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(Headless).setChannel("msedge"));
-		context = browser.newContext();
+//		context = browser.newContext();
+		
+	NewContextOptions newContextOptions = BrowserOptions.options();
+		
+//		System.out.println("a : "+ a);
+//		context = browser.newContext();
+		context = browser.newContext(newContextOptions);
+		
+		
 		// Start tracing
 		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
 		page = context.newPage();
@@ -184,7 +191,14 @@ public class WebBrowser extends BaseTest implements Browser{
 	 */
 	private static void firefoxSetup() {
 		Browser browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(Headless));
-		context = browser.newContext();
+//		context = browser.newContext();
+		
+	NewContextOptions newContextOptions = BrowserOptions.options();
+		
+//		System.out.println("a : "+ a);
+//		context = browser.newContext();
+		context = browser.newContext(newContextOptions);
+		
 		// Start tracing
 		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
 		page = context.newPage();
@@ -199,7 +213,13 @@ public class WebBrowser extends BaseTest implements Browser{
 	 */
 	private static void webkitSetup() {
 		Browser browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(Headless));
-		context = browser.newContext();
+//		context = browser.newContext();
+		
+	NewContextOptions newContextOptions = BrowserOptions.options();
+		
+//		System.out.println("a : "+ a);
+//		context = browser.newContext();
+		context = browser.newContext(newContextOptions);
 		// Start tracing
 		context.tracing().start(new Tracing.StartOptions().setScreenshots(true).setSnapshots(true).setSources(true));
 		page = context.newPage();

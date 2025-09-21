@@ -1,7 +1,5 @@
 package com.Diyar.Playwright.BrowserOptions;
-import java.nio.file.Paths;
 
-import com.Diyar.Playwright.BaseTest.BaseTest;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 
