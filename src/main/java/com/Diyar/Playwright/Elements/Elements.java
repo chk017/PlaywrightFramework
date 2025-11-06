@@ -7,6 +7,7 @@ import org.testng.Assert;
 
 import com.Diyar.Playwright.BaseTest.BaseTest;
 import com.Diyar.Playwright.Reporting.Reporting;
+import com.Diyar.Playwright.Util.Util;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -95,6 +96,31 @@ public class Elements {
 			Allure.step("Element not present ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 		}
 	}
+	
+	
+	
+
+	/**
+	 * verifyElementAbsent is a method to verify the absence of element and prints in the reporting. This method waits for 3 seconds to confirm the absence of element
+	 * @param name - It is just name of the element 
+	 * @author - ChennakesavaRao Bachu
+	 */
+	public void verifyElementAbsent(String name) {
+		/*if(isElementPresent()) {*/
+		if(isElementAbsent()) {
+			Reporting.pass("The system successfully hides the display of the element : <b>"+name+"</b>");
+	
+			Allure.step("The system successfully hides the display of the element : "+name);
+			BaseTest.logger.info("The system successfully hides the display of the element : "+name);
+//			Allure.step("Element present in time", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
+		}else {
+			Reporting.fail("The system failed to hide the element : <b>"+name+"</b>", true);
+			Allure.step("The system failed to  hide the element : "+name, Status.FAILED);
+			BaseTest.logger.info("The system failed to hide the element :"+name);
+			Allure.step("Element does not hide ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
+		}
+	}
+	
 	
 	
 	/**
@@ -214,10 +240,60 @@ public class Elements {
 		}
 	}
 
+	/**
+	 * isElementAbsent method is used to wait for absence of element for number of seconds mentioned in parameter and returns true on absence or wait to return False for presence
+	 * @param waitForAbsenceInSeconds - number of seconds to wait before return false
+	 * @return boolean
+	 * @author - kaja ChennnakesavaRao Bachu
+	 */
+	public boolean isElementAbsent(int waitForAbsenceInSeconds) {
+			
+			if(BaseTest.page.locator(sElement).count() <=0) {
+				BaseTest.logger.info("Element is absent in the DOM");
+				return true;
+			}else {
+				BaseTest.logger.info("Element is present in the DOM, checking for visibility");
+				Util.sleepforseconds(waitForAbsenceInSeconds);
+				
+				if(BaseTest.page.locator(sElement).count() <= 0)
+				return true;
+				else
+					return false;
+			}
+			
+	}
+	
+	
+	/**
+	 * isElementAbsent method is used to wait for absence of element for default timeout and returns true on absence or wait to return False for presence
+	 * @return boolean
+	 * @author - kaja ChennnakesavaRao Bachu
+	 */
+	public boolean isElementAbsent() {
+		return isElementAbsent(3);
+	}
+	
+	
+	public boolean isElementPresent(int waitForPresenceInSeconds) {
+		System.out.println("Checking for presence of element in newly created method");
+		
+		if(BaseTest.page.locator(sElement).count() >0) {
+			BaseTest.logger.info("Element is present in the DOM");
+			return true;
+		}else {
+			BaseTest.logger.info("Element is absent in the DOM, checking for presence");
+			Util.sleepforseconds(waitForPresenceInSeconds);
+			
+			if(BaseTest.page.locator(sElement).count() > 0)
+			return true;
+			else
+				return false;
+		}
+	}
+	
 	
 	/**
 	 * isElementVisible method is used to wait for visibility of element 
-	 * @param sec - number of seconds to wait to return false
 	 * @return boolean
 	 * @author - kaja ChennnakesavaRao Bachu
 	 */
@@ -235,6 +311,9 @@ public class Elements {
 //		return isElementVisible(iTimeout);
 	}
 	
+	
+
+	
 	/**
 	 * pressKey method is used to type the keys into the focused field.
 	 * F1 - F12, Digit0- Digit9, KeyA- KeyZ, Back quote, Minus, Equal, Backslash, Backspace, Tab, Delete, Escape, ArrowDown, End, Enter, Home, Insert, PageDown, PageUp, ArrowRight, ArrowUp, etc.
@@ -245,6 +324,21 @@ public class Elements {
 		
 		BaseTest.page.press(sElement, key);
 		BaseTest.logger.info("Pressing the key : "+ key);
+		
+	}
+	
+	/**
+	 * getAttribute method is used to fetch the attribute value from the element
+	 * @param attributeName - name of the attribute
+	 * @param name - name of the element
+	 * 
+	 */
+	public void getAttribute(String attributeName, String name) {
+		String attributeValue = BaseTest.page.locator(sElement).getAttribute(attributeName);
+		
+		Reporting.pass("System successfully fetched the attribute : <b>"+attributeName+" </b> having value <b>"+attributeValue+" </b> from the element  <b>"+name+" </b>");
+		Allure.step("System successfully fetched the attribute : "+attributeName+" having value "+attributeValue+" from the element  "+name);
+		BaseTest.logger.info("System successfully fetched the attribute : "+attributeName+" having value "+attributeValue+" from the element "+name);
 		
 	}
 }

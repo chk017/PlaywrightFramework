@@ -1,6 +1,7 @@
 package com.Diyar.Playwright.BaseTest;
 
 import com.Diyar.Playwright.Reporting.Reporting;
+import com.Diyar.Playwright.API.API;
 import com.Diyar.Playwright.Browser.WebBrowser;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.BrowserContext;
@@ -28,14 +29,13 @@ import java.util.Hashtable;
 import java.io.FileReader;
 import java.util.HashMap;
 
-
 //import atu.testrecorder.exceptions.ATUTestRecorderException;
 //import atu.testrecorder.ATUTestRecorder;
 
 /**
  * BaseTest class
  * @author ChennakesavaRao Bachu
- * 21-Sep-2025
+ * 06-Nov-2025
  */
 public class BaseTest {
 	protected static String sProjectDirectory = System.getProperty("user.dir");
@@ -67,6 +67,7 @@ public class BaseTest {
 	
 	public String sBrowser;
 	protected WebBrowser browser;
+	protected API api;
 	public static FrameLib lib;
 	public static BrowserContext context;
 //	public static ATUTestRecorder recorder;
@@ -160,6 +161,7 @@ public class BaseTest {
 		browser = new WebBrowser();
 //		browser.openBrowser(context.getCurrentXmlTest().getParameter("browsername"), booleanBrowserStack);
 		browser.openBrowser();
+		api = new API();
 		
 	/*	
 		if(boolVideoRecording) {
