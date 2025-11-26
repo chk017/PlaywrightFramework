@@ -21,6 +21,8 @@ import java.util.Set;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -405,5 +407,59 @@ public class Util extends BaseTest{
         return TOTP.getOTP(hexKey);
     }
 	
+	/**
+	 * This method will generate a random number and return double
+	 * @return double
+	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 */
+	public static double randonNumber_Double() {
+		double num = Math.random();
+		return num*1001;
+	}
+	/**
+	 * This method will generate a random number and return 3 digit integer
+	 * @return integer
+ 	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 */
+	public static int randonNumber_int3digits() {
+		double num = Math.random();
+		double num2 = num*1001;
+		return (int) num2;
+	}
+	
+	/**
+	 * This method will generate a random number and return 5 digit integer
+	 * @return integer
+	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 */
+	public static int randonNumber_int5digits() {
+		double num = Math.random();
+		double num2 = num*100001;
+		return (int) num2;
+	}
+	
+	/**
+	 * This method will extract the text from PDF file and return as string
+	 * @param filePath
+	 * @return string
+	 * @author (chk017) kaja ChennnakesavaRao Bachu
+	 */
+	public static String getpdfText(String filePath) {
+//		File file = new File("/path/to/your/existing_pdf_file.pdf");
+			File file = new File(filePath);
+			String pdfText = null;
+//	    try (PDDocument document = PDDocument.load(file)) {
+		
+		try  {
+			PDDocument document = org.apache.pdfbox.Loader.loadPDF(file);
+	        PDFTextStripper pdfStripper = new PDFTextStripper();
+	        pdfText = pdfStripper.getText(document);
+	        
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+		return pdfText;
+		}
+	    
 	
 }

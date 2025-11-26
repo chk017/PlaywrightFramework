@@ -27,6 +27,11 @@ public class Elements {
 		this.sElement = sXpath;
 	}
 	
+	/**
+	 * waitforElement method is used to wait for the element before performing any operation on it
+	 * @param name - name of the field
+	 * @author - ChennakesavaRao Bachu  
+	 */
 	private void waitforElement(String name) {
 //		System.out.println("waiting for element "+name);
 		try {
@@ -36,6 +41,7 @@ public class Elements {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			Reporting.fail("Element <b>"+name+"</b> timed out after waiting ", true);
 			Allure.step("Element timed out after waiting ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 			e.printStackTrace();
 		}
@@ -177,6 +183,8 @@ public class Elements {
 		}
 	}
 	
+	
+	
 
 	/**
 	 * this method used to get the text from the element
@@ -273,7 +281,12 @@ public class Elements {
 		return isElementAbsent(3);
 	}
 	
-	
+	/**
+	 * isElementPresent method is used to wait for presence of element for number of seconds mentioned in parameter and returns true on presence or wait to return False for absence
+	 * @param waitForPresenceInSeconds - number of seconds to wait before return false
+	 * @return boolean
+	 * @author - kaja ChennnakesavaRao Bachu
+	 */
 	public boolean isElementPresent(int waitForPresenceInSeconds) {
 		System.out.println("Checking for presence of element in newly created method");
 		
@@ -304,6 +317,7 @@ public class Elements {
 			BaseTest.lib.highlight(sElement);
 			return true;
 		} catch (PlaywrightException e) {
+			Reporting.fail("Element not visible till timeout", true);
 			Allure.step("Element not visible ", () -> Allure.attachment("Element Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 			return false;
 		}
@@ -318,6 +332,7 @@ public class Elements {
 	 * pressKey method is used to type the keys into the focused field.
 	 * F1 - F12, Digit0- Digit9, KeyA- KeyZ, Back quote, Minus, Equal, Backslash, Backspace, Tab, Delete, Escape, ArrowDown, End, Enter, Home, Insert, PageDown, PageUp, ArrowRight, ArrowUp, etc.
 	 * @param key 
+	 * @author - kaja ChennnakesavaRao Bachu
 	 * 
 	 */
 	public void pressKey(String key) {
@@ -331,16 +346,238 @@ public class Elements {
 	 * getAttribute method is used to fetch the attribute value from the element
 	 * @param attributeName - name of the attribute
 	 * @param name - name of the element
+	 * @return - String attribute value
+	 * @author - kaja ChennnakesavaRao Bachu
 	 * 
 	 */
-	public void getAttribute(String attributeName, String name) {
+	public String getAttribute(String attributeName, String name) {
 		String attributeValue = BaseTest.page.locator(sElement).getAttribute(attributeName);
 		
-		Reporting.pass("System successfully fetched the attribute : <b>"+attributeName+" </b> having value <b>"+attributeValue+" </b> from the element  <b>"+name+" </b>");
-		Allure.step("System successfully fetched the attribute : "+attributeName+" having value "+attributeValue+" from the element  "+name);
+//		Reporting.pass("System successfully fetched the attribute : <b>"+attributeName+" </b> having value <b>"+attributeValue+" </b> from the element  <b>"+name+" </b>");
+//		Allure.step("System successfully fetched the attribute : "+attributeName+" having value "+attributeValue+" from the element  "+name);
 		BaseTest.logger.info("System successfully fetched the attribute : "+attributeName+" having value "+attributeValue+" from the element "+name);
 		
+		return attributeValue;
 	}
+	
+	/**
+	 * isChecked method is used to verify whether the checkbox is checked or not and prints in the report
+	 * @param name - name of the checkbox
+	 * @return - boolean true or false
+	 * @author - kaja ChennnakesavaRao Bachu
+	 * 
+	 */
+	public boolean isChecked(String name) {
+		boolean isChecked = BaseTest.page.locator(sElement).isChecked();
+		if(isChecked) {
+			Reporting.pass("The checkbox : <b>"+name+"</b> is checked");
+			Allure.step("The checkbox : "+name+" is checked");
+			BaseTest.logger.info("The checkbox : "+name+" is checked");
+			return isChecked;
+		}else {
+			Reporting.fail("The checkbox : <b>"+name+"</b> is not checked", true);
+			Allure.step("The checkbox : "+name+" is not checked", Status.FAILED);
+			BaseTest.logger.info("The checkbox : "+name+" is not checked");
+			Allure.step("Checkbox not checked ", () -> Allure.attachment("Checkbox "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
+			return isChecked;
+		}
+	}
+	
+	/**
+	 * hover method is used to hover on the element. Before hovering, system wait for element, highlights the element and hovers on it
+	 * @param name - name of the field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void hover(String name) {
+		waitforElement(name);
+		BaseTest.page.hover(sElement);
+		Reporting.pass("System successfully hovered on the element : <b>"+name+"</b>");
+		Allure.step("System successfully hovered on the element : "+name);
+		BaseTest.logger.info("System successfully hovered on the element : "+name);
+	}
+	
+	/**
+	 * getValue method is used to get the value from the input field.
+	 * @return - String value from the input field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public String getValue() {
+		return BaseTest.page.locator(sElement).inputValue();
+	}
+	
+	/**
+	 * clear method is used to clear the value from the input field.
+	 * @param name - name of the field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void clear(String name) {
+		waitforElement(name);
+		BaseTest.page.fill(sElement, "");
+		Reporting.pass("System successfully cleared the field : <b>"+name+"</b>");
+		Allure.step("System successfully cleared the field : "+name);
+		BaseTest.logger.info("System successfully cleared the field : "+name);
+	}
+	
+	/**
+	 * doubleClick method is used to double click on element. Before double clicking, system wait for element, highlights the element and double clicks on it
+	 * @param name - name of the field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void doubleClick(String name) {
+		waitforElement(name);
+		BaseTest.page.dblclick(sElement);
+		Reporting.pass("System successfully double clicked the element : <b>"+name+"</b>");
+		Allure.step("System successfully double clicked the element : "+name);
+		BaseTest.logger.info("System successfully double clicked the element : "+name);
+	}
+	
+	/**
+	 * rightClick method is used to right click on element. Before right clicking, system wait for element, highlights the element and right clicks on it
+	 * @param name - name of the field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void rightClick(String name) {
+		waitforElement(name);
+		BaseTest.page.click(sElement, new Page.ClickOptions().setButton(com.microsoft.playwright.options.MouseButton.RIGHT));
+		Reporting.pass("System successfully right clicked the element : <b>"+name+"</b>");
+		Allure.step("System successfully right clicked the element : "+name);
+		BaseTest.logger.info("System successfully right clicked the element : "+name);
+	}
+	
+	/**
+	 * scrollIntoViewIfNeeded method is used to scroll to the element. Before scrolling, system wait for element, highlights the element and scrolls to it
+	 * @param name - name of the field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void scrollIntoViewIfNeeded(String name) {
+		waitforElement(name);
+		BaseTest.page.locator(sElement).scrollIntoViewIfNeeded();
+		Reporting.pass("System successfully scrolled to the element : <b>"+name+"</b>");
+		Allure.step("System successfully scrolled to the element : "+name);
+		BaseTest.logger.info("System successfully scrolled to the element : "+name);
 }
 
-
+/**
+	 * focus method is used to set focus on the element. Before performing operation, system wait for element, highlights the element and performs the operation
+	 * @param name - name of the field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void focus(String name) {
+		waitforElement(name);
+		BaseTest.page.locator(sElement).focus();
+		Reporting.pass("System successfully focused on the element : <b>"+name+"</b>");
+		Allure.step("System successfully focused on the element : "+name);
+		BaseTest.logger.info("System successfully focused on the element : "+name);
+	}
+	
+	/**
+	 * blur method is used to remove focus from the element. Before performing operation, system wait for element, highlights the element and performs the operation
+	 * @param name - name of the field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void blur(String name) {
+		waitforElement(name);
+		BaseTest.page.locator(sElement).blur();
+		Reporting.pass("System successfully removed focus from the element : <b>"+name+"</b>");
+		Allure.step("System successfully removed focus from the element : "+name);
+		BaseTest.logger.info("System successfully removed focus from the element : "+name);
+	}
+	
+	
+	/**
+	 * check method is used to check the checkbox. Before performing operation, system wait for element, highlights the element and performs the operation
+	 * @param name - name of the checkbox
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void check(String name) {
+		waitforElement(name);
+		BaseTest.page.locator(sElement).check();
+		Reporting.pass("System successfully checked the checkbox : <b>"+name+"</b>");
+		Allure.step("System successfully checked the checkbox : "+name);
+		BaseTest.logger.info("System successfully checked the checkbox : "+name);
+	}
+	
+	/**
+	 * uncheck method is used to uncheck the checkbox. Before performing operation, system wait for element, highlights the element and performs the operation
+	 * @param name - name of the checkbox
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void uncheck(String name) {
+		waitforElement(name);
+		BaseTest.page.locator(sElement).uncheck();
+		Reporting.pass("System successfully unchecked the checkbox : <b>"+name+"</b>");
+		Allure.step("System successfully unchecked the checkbox : "+name);
+		BaseTest.logger.info("System successfully unchecked the checkbox : "+name);
+	}
+	
+	
+	/**
+	 * waitForElementToBeEnabled method is used to wait for the element to be enabled for default timeout
+	 * @param name - name of the element
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void waitForElementToBeEnabled(String name) {
+		try {
+			BaseTest.page.waitForSelector(sElement, new Page.WaitForSelectorOptions().setTimeout(iTimeout*1000).setState(WaitForSelectorState.ATTACHED));
+			BaseTest.logger.info("Element is enabled before timeout");
+			BaseTest.lib.highlight(sElement);
+		} catch (PlaywrightException e) {
+			Reporting.fail("Element not enabled till timeout", true);
+			Allure.step("Element not enabled ", () -> Allure.attachment("Element Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
+		}
+	}
+	
+	/**
+	 * setchecked method is used to check or uncheck the checkbox based on the boolean value provided as parameter. Before performing operation, system wait for element, highlights the element and performs the operation
+	 * @param value - boolean value true or false
+	 * @param name - name of the checkbox
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void setchecked(boolean value, String name) {
+		waitforElement(name);
+		if(value) {
+			BaseTest.page.locator(sElement).setChecked(value);
+			Reporting.pass("System successfully checked the checkbox : <b>"+name+"</b>");
+			Allure.step("System successfully checked the checkbox : "+name);
+			BaseTest.logger.info("System successfully checked the checkbox : "+name);
+		}else {
+			BaseTest.page.locator(sElement).setChecked(value);
+			Reporting.pass("System successfully unchecked the checkbox : <b>"+name+"</b>");
+			Allure.step("System successfully unchecked the checkbox : "+name);
+			BaseTest.logger.info("System successfully unchecked the checkbox : "+name);
+		}
+	}
+	
+	/**
+	 * tap method is used to tap on element. Before tapping, system wait for element, highlights the element and taps on it
+	 * @param name - name of the field
+	 * @author - kaja ChennnakesavaRao Bachu  
+	 */
+	public void tap(String name) {
+		waitforElement(name);
+		BaseTest.page.tap(sElement);
+		Reporting.pass("System successfully tapped the element : <b>"+name+"</b>");
+		Allure.step("System successfully tapped the element : "+name);
+		BaseTest.logger.info("System successfully tapped the element : "+name);
+	}
+	
+	/**
+	 * clearAndFill method is used to clear existing value and enter a new value in the field. Before filling, system wait for the element, highlights the element, clears existing value, fills the new value in the field and finally verifies the value. 
+	 * @param value - value to enter in the field
+	 * @param name - name of the field 
+	 * 
+	 * @author - kaja ChennnakesavaRao Bachu
+	 */
+	public void clearAndFill(String value, String name) {
+		waitforElement(name);
+		BaseTest.page.fill(sElement, "");
+		BaseTest.page.fill(sElement, value);
+		BaseTest.logger.info("System successfully enters the "+value+" in the field : "+name);
+		verifyInputText(value, name);
+		
+	}
+	
+	
+	
+	
+}
