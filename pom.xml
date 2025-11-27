@@ -119,7 +119,7 @@
 			<!--<version>7.4.0</version>-->
 			<!--<version>7.11.0</version>-->
 			<version>${testng-version}</version>
-		<!--	<scope>test</scope-->>
+		<!--	<scope>test</scope-->
 			<scope>compile</scope>
 			
 		</dependency>
