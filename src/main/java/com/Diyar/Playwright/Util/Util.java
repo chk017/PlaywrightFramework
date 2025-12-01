@@ -5,11 +5,13 @@ package com.Diyar.Playwright.Util;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Base64;
@@ -461,5 +463,45 @@ public class Util extends BaseTest{
 		return pdfText;
 		}
 	    
+	/**
+	 * This method is to get the IPv4 address of Ethernet 2 interface using PowerShell
+	 * 
+	 * @param powershellExePath . Generally it is "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+	 * @return IPV4 address as String
+	 */
+	public static String getIPv4Address_Ethernet2(String powershellExePath) {
+		
+		String ip = null;
+        try {
+
+            // PowerShell command to get IPv4 address of Ethernet 2
+            String command = "(Get-NetIPConfiguration -InterfaceAlias 'Ethernet 2').IPv4Address.IPAddress";
+
+
+         // Build process
+            ProcessBuilder pb = new ProcessBuilder(powershellExePath, "-Command", command);
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+
+
+            // Read the output
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            while ((ip = reader.readLine()) != null) {
+                System.out.println("IPv4 Address: " + ip);
+                return ip;
+            }
+
+            // Wait for process to finish
+            process.waitFor();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+        return "Error in getting IP Address";
+        
+    }
+
 	
 }

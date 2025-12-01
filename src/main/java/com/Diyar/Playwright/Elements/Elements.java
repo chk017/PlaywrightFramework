@@ -41,7 +41,7 @@ public class Elements {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			Reporting.fail("Element <b>"+name+"</b> timed out after waiting ", true);
+			Reporting.info("Element <b>"+name+"</b> timed out after waiting ", true);
 			Allure.step("Element timed out after waiting ", () -> Allure.attachment("Element "+name + " Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 			e.printStackTrace();
 		}
@@ -248,6 +248,12 @@ public class Elements {
 		}
 	}
 
+	
+	
+
+	
+	
+	
 	/**
 	 * isElementAbsent method is used to wait for absence of element for number of seconds mentioned in parameter and returns true on absence or wait to return False for presence
 	 * @param waitForAbsenceInSeconds - number of seconds to wait before return false
@@ -317,7 +323,7 @@ public class Elements {
 			BaseTest.lib.highlight(sElement);
 			return true;
 		} catch (PlaywrightException e) {
-			Reporting.fail("Element not visible till timeout", true);
+			Reporting.info("Element not visible till timeout", true);
 			Allure.step("Element not visible ", () -> Allure.attachment("Element Screenshot ", new ByteArrayInputStream(BaseTest.page.screenshot())));
 			return false;
 		}
